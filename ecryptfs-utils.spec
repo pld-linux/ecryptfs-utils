@@ -1,17 +1,19 @@
 Summary:	The eCryptfs mount helper and support libraries
+Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
 Version:	23
 Release:	1
-License:	GPL
+License:	GPL v2+
 Group:		Base
-URL:		http://ecryptfs.sourceforge.net
 Source0:	http://dl.sourceforge.net/ecryptfs/%{name}-%{version}.tar.bz2
 # Source0-md5:	63ed7aa33edf074bb3abdba6271b4370
+URL:		http://ecryptfs.sourceforge.net/
 BuildRequires:	gpgme-devel
-BuildRequires:	keyutils-devel
+BuildRequires:	keyutils-devel >= 1.0
 BuildRequires:	libgcrypt-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pam-devel
+BuildRequires:	perl-tools-pod
 Requires:	uname(version) >= 2.6.19
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -23,16 +25,39 @@ functions.
 
 Install ecryptfs-utils if you would like to mount eCryptfs.
 
+%description -l pl.UTF-8
+eCryptfs to stakowalny kryptograficzny system plików dostępny w jądrze
+Linuksa od wersji 2.6.19. Ten pakiet udostępnia narzędzie pomocnicze
+dla programu mount oraz wspierające je biblioteki wykonujące
+zarządzanie kluczami i funkcje związane z montowaniem.
+
+Pakiet ecryptfs-utils należy zainstalować, aby montować eCryptfs.
+
 %package devel
 Summary:	The eCryptfs userspace development package
-Group:		Base
+Summary(pl.UTF-8):	Pakiet programistyczny przestrzeni użytkownika dla eCryptfs
+Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	keyutils-devel
-Requires:	openssl-devel
-Requires:	pam-devel
+Requires:	libgcrypt-devel
 
 %description devel
 Userspace development files for eCryptfs.
+
+%description devel -l pl.UTF-8
+Pliki programistyczne przestrzeni użytkownika dla eCryptfs.
+
+%package static
+Summary:	Static eCryptfs library
+Summary(pl.UTF-8):	Statyczna biblioteka eCryptfs
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static eCryptfs library.
+
+%description static -l pl.UTF-8
+Statyczna biblioteka eCryptfs.
 
 %package -n pam-pam_ecryptfs
 Summary:	A PAM module - ecryptfs
@@ -62,27 +87,44 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+install -D doc/manpage/ecryptfs-manager.8 $RPM_BUILD_ROOT%{_mandir}/man8/ecryptfs-manager.8
+install -D doc/manpage/ecryptfsd.8 $RPM_BUILD_ROOT%{_mandir}/man8/ecryptfsd.8
+install -D doc/manpage/mount.ecryptfs.8 $RPM_BUILD_ROOT%{_mandir}/man8/mount.ecryptfs.8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
-%doc README COPYING AUTHORS NEWS THANKS
+%doc AUTHORS NEWS README THANKS doc/ecryptfs-faq.html
 %attr(755,root,root) /sbin/mount.ecryptfs
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/libecryptfs.so.*
-%{_libdir}/ecryptfs
+%attr(755,root,root) %{_bindir}/ecryptfs-*
+%attr(755,root,root) %{_bindir}/ecryptfsd
+%attr(755,root,root) %{_libdir}/libecryptfs.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libecryptfs.so.0
+%dir %{_libdir}/ecryptfs
+%attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_*.so
 %{_mandir}/man7/ecryptfs.7*
+%{_mandir}/man8/ecryptfs-*.8*
+%{_mandir}/man8/ecryptfsd.8*
+%{_mandir}/man8/mount.ecryptfs.8*
 
 %files devel
 %defattr(644,root,root,755)
 %doc doc/design_doc/ecryptfs_design_doc_v0_2.tex doc/design_doc/*.eps
 %attr(755,root,root) %{_libdir}/libecryptfs.so
+#%{_libdir}/libecryptfs.la
 %{_includedir}/ecryptfs.h
+
+# removed on make install
+#%files static
+#%defattr(644,root,root,755)
+#%{_libdir}/libecryptfs.a
 
 %files -n pam-pam_ecryptfs
 %defattr(644,root,root,755)
+%doc doc/ecryptfs-pam-doc.txt
 %attr(755,root,root) /%{_lib}/security/pam_ecryptfs.so
