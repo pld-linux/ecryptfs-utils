@@ -11,9 +11,12 @@ URL:		http://ecryptfs.sourceforge.net/
 BuildRequires:	gpgme-devel
 BuildRequires:	keyutils-devel >= 1.0
 BuildRequires:	libgcrypt-devel
+# missing plugin source
+#BuildRequires:	opencryptoki-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pam-devel
 BuildRequires:	perl-tools-pod
+BuildRequires:	trousers-devel
 Requires:	uname(version) >= 2.6.19
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -106,7 +109,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libecryptfs.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libecryptfs.so.0
 %dir %{_libdir}/ecryptfs
-%attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_*.so
+# not installed - why?
+#%attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_gpg.so
+%attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_openssl.so
+%attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_passphrase.so
+%attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_tspi.so
 %{_mandir}/man7/ecryptfs.7*
 %{_mandir}/man8/ecryptfs-*.8*
 %{_mandir}/man8/ecryptfsd.8*
