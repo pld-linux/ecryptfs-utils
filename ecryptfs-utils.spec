@@ -12,7 +12,8 @@ BuildRequires:	gpgme-devel
 BuildRequires:	keyutils-devel >= 1.0
 BuildRequires:	libgcrypt-devel
 # missing plugin source
-#BuildRequires:	opencryptoki-devel
+#BuildRequires:        opencryptoki-devel
+BuildRequires:	opencryptoki-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pam-devel
 BuildRequires:	perl-tools-pod
@@ -80,6 +81,10 @@ Moduł PAM ecryptfs.
 %build
 %configure \
 	--disable-opencryptoki \
+	--enable-openssl \
+	--enable-tspi \
+	--enable-gpg \
+	--enable-pam \
 	--disable-rpath
 
 %{__make}
