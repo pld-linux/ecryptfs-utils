@@ -13,7 +13,6 @@ BuildRequires:	keyutils-devel >= 1.0
 BuildRequires:	libgcrypt-devel
 # missing plugin source
 #BuildRequires:        opencryptoki-devel
-BuildRequires:	opencryptoki-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pam-devel
 BuildRequires:	perl-tools-pod
