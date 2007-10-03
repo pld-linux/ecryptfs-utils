@@ -2,7 +2,7 @@ Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
 Version:	23
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Base
 Source0:	http://dl.sourceforge.net/ecryptfs/%{name}-%{version}.tar.bz2
@@ -17,7 +17,7 @@ BuildRequires:	openssl-devel
 BuildRequires:	pam-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	trousers-devel
-Requires:	uname(version) >= 2.6.19
+Requires:	uname(release) >= 2.6.19
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
