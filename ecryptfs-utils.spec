@@ -1,12 +1,12 @@
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	23
-Release:	2
+Version:	26
+Release:	1
 License:	GPL v2+
 Group:		Base
 Source0:	http://dl.sourceforge.net/ecryptfs/%{name}-%{version}.tar.bz2
-# Source0-md5:	63ed7aa33edf074bb3abdba6271b4370
+# Source0-md5:	9d756cebe6301c560a98ac46f79734fa
 URL:		http://ecryptfs.sourceforge.net/
 BuildRequires:	gpgme-devel
 BuildRequires:	keyutils-devel >= 1.0
@@ -113,8 +113,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libecryptfs.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libecryptfs.so.0
 %dir %{_libdir}/ecryptfs
-# not installed - why?
-#%attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_gpg.so
+%attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_gpg.so
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_openssl.so
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_passphrase.so
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_tspi.so
@@ -127,13 +126,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/design_doc/ecryptfs_design_doc_v0_2.tex doc/design_doc/*.eps
 %attr(755,root,root) %{_libdir}/libecryptfs.so
-#%{_libdir}/libecryptfs.la
+%{_libdir}/libecryptfs.la
 %{_includedir}/ecryptfs.h
+%{_pkgconfigdir}/*.pc
 
-# removed on make install
-#%files static
-#%defattr(644,root,root,755)
-#%{_libdir}/libecryptfs.a
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libecryptfs.a
 
 %files -n pam-pam_ecryptfs
 %defattr(644,root,root,755)
