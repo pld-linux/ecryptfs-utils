@@ -1,21 +1,20 @@
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	26
+Version:	27
 Release:	1
 License:	GPL v2+
 Group:		Base
 Source0:	http://dl.sourceforge.net/ecryptfs/%{name}-%{version}.tar.bz2
-# Source0-md5:	9d756cebe6301c560a98ac46f79734fa
+# Source0-md5:	f4abeff90a582fd135bdb3fbf7579183
 URL:		http://ecryptfs.sourceforge.net/
 BuildRequires:	gpgme-devel
 BuildRequires:	keyutils-devel >= 1.0
-BuildRequires:	libgcrypt-devel
-# missing plugin source
-#BuildRequires:        opencryptoki-devel
+BuildRequires:	libgcrypt-devel >= 1.2.0
 BuildRequires:	openssl-devel
 BuildRequires:	pam-devel
 BuildRequires:	perl-tools-pod
+BuildRequires:	pkcs11-helper-devel >= 1.04
 BuildRequires:	trousers-devel
 Requires:	uname(release) >= 2.6.19
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -79,12 +78,12 @@ Moduł PAM ecryptfs.
 
 %build
 %configure \
-	--disable-opencryptoki \
-	--enable-openssl \
-	--enable-tspi \
+	--disable-rpath \
 	--enable-gpg \
+	--enable-openssl \
 	--enable-pam \
-	--disable-rpath
+	--enable-pkcs11-helper \
+	--enable-tspi
 
 %{__make}
 
@@ -106,7 +105,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README THANKS doc/ecryptfs-faq.html
+%doc AUTHORS NEWS README THANKS doc/{ecryptfs-faq.html,ecryptfs-pam-doc.txt,ecryptfs-pkcs11-helper-doc.txt}
 %attr(755,root,root) /sbin/mount.ecryptfs
 %attr(755,root,root) %{_bindir}/ecryptfs-*
 %attr(755,root,root) %{_bindir}/ecryptfsd
@@ -116,6 +115,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_gpg.so
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_openssl.so
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_passphrase.so
+%attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_pkcs11_helper.so
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_tspi.so
 %{_mandir}/man7/ecryptfs.7*
 %{_mandir}/man8/ecryptfs-*.8*
