@@ -1,20 +1,21 @@
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	27
+Version:	30
 Release:	1
 License:	GPL v2+
 Group:		Base
 Source0:	http://dl.sourceforge.net/ecryptfs/%{name}-%{version}.tar.bz2
-# Source0-md5:	f4abeff90a582fd135bdb3fbf7579183
+# Source0-md5:	7b4c343e17652f84c6615c6db6b286d9
 URL:		http://ecryptfs.sourceforge.net/
 BuildRequires:	gpgme-devel
 BuildRequires:	keyutils-devel >= 1.0
 BuildRequires:	libgcrypt-devel >= 1.2.0
-BuildRequires:	openssl-devel
+BuildRequires:	openssl-devel >= 0.9.7
 BuildRequires:	pam-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkcs11-helper-devel >= 1.04
+BuildRequires:	pkgconfig
 BuildRequires:	trousers-devel
 Requires:	uname(release) >= 2.6.19
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -40,8 +41,8 @@ Summary:	The eCryptfs userspace development package
 Summary(pl.UTF-8):	Pakiet programistyczny przestrzeni użytkownika dla eCryptfs
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	keyutils-devel
-Requires:	libgcrypt-devel
+Requires:	keyutils-devel >= 1.0
+Requires:	libgcrypt-devel >= 1.2.0
 
 %description devel
 Userspace development files for eCryptfs.
@@ -105,7 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README THANKS doc/{ecryptfs-faq.html,ecryptfs-pam-doc.txt,ecryptfs-pkcs11-helper-doc.txt}
+%doc AUTHORS NEWS README THANKS doc/beginners_guide/final/ecryptfs_beginners_guide.{css,html}
 %attr(755,root,root) /sbin/mount.ecryptfs
 %attr(755,root,root) %{_bindir}/ecryptfs-*
 %attr(755,root,root) %{_bindir}/ecryptfsd
@@ -124,11 +125,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc doc/design_doc/ecryptfs_design_doc_v0_2.tex doc/design_doc/*.eps
+%doc doc/design_doc/final/ecryptfs_design_doc_v0_2.{css,html} doc/design_doc/final/*.png
 %attr(755,root,root) %{_libdir}/libecryptfs.so
 %{_libdir}/libecryptfs.la
 %{_includedir}/ecryptfs.h
-%{_pkgconfigdir}/*.pc
+%{_pkgconfigdir}/libecryptfs.pc
 
 %files static
 %defattr(644,root,root,755)
@@ -136,5 +137,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n pam-pam_ecryptfs
 %defattr(644,root,root,755)
-%doc doc/ecryptfs-pam-doc.txt
 %attr(755,root,root) /%{_lib}/security/pam_ecryptfs.so
