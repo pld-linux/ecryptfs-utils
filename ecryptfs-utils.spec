@@ -1,16 +1,20 @@
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	30
+Version:	38
 Release:	1
 License:	GPL v2+
 Group:		Base
 Source0:	http://dl.sourceforge.net/ecryptfs/%{name}-%{version}.tar.bz2
-# Source0-md5:	7b4c343e17652f84c6615c6db6b286d9
+# Source0-md5:	4f05174e85947b401af820bcda5b167e
+Patch0:		%{name}-sh.patch
 URL:		http://ecryptfs.sourceforge.net/
+BuildRequires:	autoconf >= 2.59
+BuildRequires:	automake
 BuildRequires:	gpgme-devel
 BuildRequires:	keyutils-devel >= 1.0
 BuildRequires:	libgcrypt-devel >= 1.2.0
+BuildRequires:	libtool
 BuildRequires:	openssl-devel >= 0.9.7
 BuildRequires:	pam-devel
 BuildRequires:	perl-tools-pod
@@ -76,8 +80,14 @@ Moduł PAM ecryptfs.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--disable-rpath \
 	--enable-gpg \
