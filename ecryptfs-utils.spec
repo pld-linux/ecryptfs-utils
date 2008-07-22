@@ -1,12 +1,12 @@
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	38
+Version:	52
 Release:	1
 License:	GPL v2+
 Group:		Base
 Source0:	http://dl.sourceforge.net/ecryptfs/%{name}-%{version}.tar.bz2
-# Source0-md5:	4f05174e85947b401af820bcda5b167e
+# Source0-md5:	f0b56fddbb75f048252eb9bfd923766f
 Patch0:		%{name}-sh.patch
 URL:		http://ecryptfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.59
@@ -116,8 +116,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README THANKS doc/beginners_guide/final/ecryptfs_beginners_guide.{css,html}
+%doc AUTHORS NEWS README THANKS doc/{ecryptfs-faq.html,ecryptfs-pkcs11-helper-doc.txt}
 %attr(755,root,root) /sbin/mount.ecryptfs
+%attr(755,root,root) /sbin/mount.ecryptfs_private
+%attr(755,root,root) /sbin/umount.ecryptfs_private
 %attr(755,root,root) %{_bindir}/ecryptfs-*
 %attr(755,root,root) %{_bindir}/ecryptfsd
 %attr(755,root,root) %{_libdir}/libecryptfs.so.*.*.*
@@ -135,7 +137,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc doc/design_doc/final/ecryptfs_design_doc_v0_2.{css,html} doc/design_doc/final/*.png
 %attr(755,root,root) %{_libdir}/libecryptfs.so
 %{_libdir}/libecryptfs.la
 %{_includedir}/ecryptfs.h
@@ -147,4 +148,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n pam-pam_ecryptfs
 %defattr(644,root,root,755)
+%doc doc/ecryptfs-pam-doc.txt
 %attr(755,root,root) /%{_lib}/security/pam_ecryptfs.so
