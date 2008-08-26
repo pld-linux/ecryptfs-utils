@@ -1,12 +1,12 @@
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	52
+Version:	56
 Release:	1
 License:	GPL v2+
 Group:		Base
 Source0:	http://dl.sourceforge.net/ecryptfs/%{name}-%{version}.tar.bz2
-# Source0-md5:	f0b56fddbb75f048252eb9bfd923766f
+# Source0-md5:	e199bf29f63ea501c95fc166ed71c093
 Patch0:		%{name}-sh.patch
 URL:		http://ecryptfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.59
@@ -89,7 +89,6 @@ Moduł PAM ecryptfs.
 %{__autoheader}
 %{__automake}
 %configure \
-	--disable-rpath \
 	--enable-gpg \
 	--enable-openssl \
 	--enable-pam \
@@ -103,10 +102,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-install -D doc/manpage/ecryptfs-manager.8 $RPM_BUILD_ROOT%{_mandir}/man8/ecryptfs-manager.8
-install -D doc/manpage/ecryptfsd.8 $RPM_BUILD_ROOT%{_mandir}/man8/ecryptfsd.8
-install -D doc/manpage/mount.ecryptfs.8 $RPM_BUILD_ROOT%{_mandir}/man8/mount.ecryptfs.8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -130,6 +125,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_passphrase.so
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_pkcs11_helper.so
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_tspi.so
+%{_mandir}/man1/ecryptfs-*.1*
+%{_mandir}/man1/mount.ecryptfs_private.1*
+%{_mandir}/man1/umount.ecryptfs_private.1*
 %{_mandir}/man7/ecryptfs.7*
 %{_mandir}/man8/ecryptfs-*.8*
 %{_mandir}/man8/ecryptfsd.8*
@@ -150,3 +148,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/ecryptfs-pam-doc.txt
 %attr(755,root,root) /%{_lib}/security/pam_ecryptfs.so
+%{_mandir}/man8/pam_ecryptfs.8*
