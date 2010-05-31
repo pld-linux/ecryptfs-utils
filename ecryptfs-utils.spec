@@ -1,12 +1,12 @@
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	56
+Version:	83
 Release:	1
 License:	GPL v2+
 Group:		Base
-Source0:	http://dl.sourceforge.net/ecryptfs/%{name}-%{version}.tar.bz2
-# Source0-md5:	e199bf29f63ea501c95fc166ed71c093
+Source0:	http://launchpad.net/ecryptfs/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
+# Source0-md5:	1c97d96437d62921744647d4157a8f3e
 Patch0:		%{name}-sh.patch
 URL:		http://ecryptfs.sourceforge.net/
 #  http://www.ubuntu.com/usn/usn-783-1
@@ -87,7 +87,7 @@ Moduł PAM ecryptfs.
 
 %build
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
