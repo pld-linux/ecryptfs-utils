@@ -12,6 +12,7 @@ URL:		http://ecryptfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	gpgme-devel
+BuildRequires:	intltool >= 0.41.0
 BuildRequires:	keyutils-devel >= 1.0
 BuildRequires:	libgcrypt-devel >= 1.2.0
 BuildRequires:	libtool
