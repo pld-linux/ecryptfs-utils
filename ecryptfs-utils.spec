@@ -9,9 +9,6 @@ Source0:	http://launchpad.net/ecryptfs/trunk/%{version}/+download/%{name}_%{vers
 # Source0-md5:	1c97d96437d62921744647d4157a8f3e
 Patch0:		%{name}-sh.patch
 URL:		http://ecryptfs.sourceforge.net/
-#  http://www.ubuntu.com/usn/usn-783-1
-# http://bazaar.launchpad.net/~ecryptfs/ecryptfs/ecryptfs-utils/revision/403
-BuildRequires:	security(CVE-2009-1296)
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	gpgme-devel
