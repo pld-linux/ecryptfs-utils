@@ -94,7 +94,8 @@ Moduł PAM ecryptfs.
 	--enable-openssl \
 	--enable-pam \
 	--enable-pkcs11-helper \
-	--enable-tspi
+	--enable-tspi \
+	--enable-static
 
 %{__make}
 
