@@ -117,6 +117,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/mount.ecryptfs
 %attr(755,root,root) /sbin/mount.ecryptfs_private
 %attr(755,root,root) /sbin/umount.ecryptfs_private
+%attr(755,root,root) /sbin/umount.ecryptfs
 %attr(755,root,root) %{_bindir}/ecryptfs-*
 %attr(755,root,root) %{_bindir}/ecryptfsd
 %attr(755,root,root) %{_libdir}/libecryptfs.so.*.*.*
@@ -134,6 +135,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/ecryptfs-*.8*
 %{_mandir}/man8/ecryptfsd.8*
 %{_mandir}/man8/mount.ecryptfs.8*
+%{_mandir}/man8/umount.ecryptfs.8*
 
 %files devel
 %defattr(644,root,root,755)
