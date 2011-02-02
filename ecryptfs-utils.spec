@@ -1,12 +1,12 @@
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	83
+Version:	85
 Release:	1
 License:	GPL v2+
 Group:		Base
 Source0:	http://launchpad.net/ecryptfs/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
-# Source0-md5:	1c97d96437d62921744647d4157a8f3e
+# Source0-md5:	eacf9488681d99651da544a4c261f784
 Patch0:		%{name}-sh.patch
 URL:		http://ecryptfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.59
@@ -21,9 +21,14 @@ BuildRequires:	pam-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkcs11-helper-devel >= 1.04
 BuildRequires:	pkgconfig
+BuildRequires:	python-devel
+BuildRequires:	swig
 BuildRequires:	trousers-devel
 Requires:	uname(release) >= 2.6.19
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# python module
+%define		skip_post_check_so	_libecryptfs.so.0.0.0
 
 %description
 eCryptfs is a stacked cryptographic filesystem that ships in Linux
@@ -79,6 +84,16 @@ A PAM module - ecryptfs.
 %description -n pam-pam_ecryptfs -l pl.UTF-8
 Moduł PAM ecryptfs.
 
+%package python
+Summary:	Python bindings for the eCryptfs utils
+Group:		Base
+Requires:	%{name} = %{version}-%{release}
+
+%description python
+The ecryptfs-utils-python package contains a module that permits
+applications written in the Python programming language to use the
+interface supplied by the ecryptfs-utils library.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -105,13 +120,15 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README THANKS doc/{ecryptfs-faq.html,ecryptfs-pkcs11-helper-doc.txt}
 %attr(755,root,root) /sbin/mount.ecryptfs
@@ -128,6 +145,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_passphrase.so
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_pkcs11_helper.so
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_tspi.so
+%{_datadir}/%{name}
 %{_mandir}/man1/ecryptfs-*.1*
 %{_mandir}/man1/mount.ecryptfs_private.1*
 %{_mandir}/man1/umount.ecryptfs_private.1*
@@ -153,3 +171,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/ecryptfs-pam-doc.txt
 %attr(755,root,root) /%{_lib}/security/pam_ecryptfs.so
 %{_mandir}/man8/pam_ecryptfs.8*
+
+%files python
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py_sitedir}/%{name}/_libecryptfs.so*
+%dir %{py_sitescriptdir}/%{name}
+%{py_sitescriptdir}/%{name}/*.py[co]
