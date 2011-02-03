@@ -14,15 +14,16 @@ BuildRequires:	automake
 BuildRequires:	gpgme-devel
 BuildRequires:	intltool >= 0.41.0
 BuildRequires:	keyutils-devel >= 1.0
-BuildRequires:	libgcrypt-devel >= 1.2.0
 BuildRequires:	libtool
+BuildRequires:	nss-devel >= 3
 BuildRequires:	openssl-devel >= 0.9.7
 BuildRequires:	pam-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkcs11-helper-devel >= 1.04
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel
-BuildRequires:	swig
+BuildRequires:	python-devel >= 1:2.5
+BuildRequires:	rpmbuild(macros) >= 1.219
+BuildRequires:	swig >= 1.3.31
 BuildRequires:	trousers-devel
 Requires:	uname(release) >= 2.6.19
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -52,7 +53,7 @@ Summary(pl.UTF-8):	Pakiet programistyczny przestrzeni użytkownika dla eCryptfs
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	keyutils-devel >= 1.0
-Requires:	libgcrypt-devel >= 1.2.0
+Requires:	nss-devel >= 3
 
 %description devel
 Userspace development files for eCryptfs.
@@ -73,26 +74,33 @@ Static eCryptfs library.
 Statyczna biblioteka eCryptfs.
 
 %package -n pam-pam_ecryptfs
-Summary:	A PAM module - ecryptfs
-Summary(pl.UTF-8):	Moduł PAM ecryptfs
+Summary:	eCryptfs PAM module
+Summary(pl.UTF-8):	Moduł PAM eCryptfs
 Group:		Base
 Requires:	%{name} = %{version}-%{release}
 
 %description -n pam-pam_ecryptfs
-A PAM module - ecryptfs.
+eCryptfs PAM module.
 
 %description -n pam-pam_ecryptfs -l pl.UTF-8
-Moduł PAM ecryptfs.
+Moduł PAM eCryptfs.
 
-%package python
+%package -n python-ecryptfs
 Summary:	Python bindings for the eCryptfs utils
-Group:		Base
+Summary(pl.UTF-8):	Wiązania Pythona do narzędzi eCryptfs
+Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	ecryptfs-utils-python
 
-%description python
-The ecryptfs-utils-python package contains a module that permits
-applications written in the Python programming language to use the
-interface supplied by the ecryptfs-utils library.
+%description -n python-ecryptfs
+This package contains a module that permits applications written in
+the Python programming language to use the interface supplied by the
+ecryptfs-utils library.
+
+%description -n python-ecryptfs -l pl.UTF-8
+Ten pakiet zawiera moduł pozwalający aplikacjom napisanym w Pythonie
+na korzystanie z interfejsu dostarczanego przez bibliotekę
+ecryptfs-utils.
 
 %prep
 %setup -q
@@ -120,6 +128,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/%{name}/_libecryptfs.{la,a}
+%py_postclean
+
 %find_lang %{name}
 
 %clean
@@ -130,7 +141,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README THANKS doc/{ecryptfs-faq.html,ecryptfs-pkcs11-helper-doc.txt}
+%doc AUTHORS ChangeLog NEWS README THANKS doc/{ecryptfs-faq.html,ecryptfs-pkcs11-helper-doc.txt}
 %attr(755,root,root) /sbin/mount.ecryptfs
 %attr(755,root,root) /sbin/mount.ecryptfs_private
 %attr(755,root,root) /sbin/umount.ecryptfs_private
@@ -172,8 +183,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /%{_lib}/security/pam_ecryptfs.so
 %{_mandir}/man8/pam_ecryptfs.8*
 
-%files python
+%files -n python-ecryptfs
 %defattr(644,root,root,755)
+%dir %{py_sitedir}/%{name}
 %attr(755,root,root) %{py_sitedir}/%{name}/_libecryptfs.so*
 %dir %{py_sitescriptdir}/%{name}
 %{py_sitescriptdir}/%{name}/*.py[co]
