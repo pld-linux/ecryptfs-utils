@@ -124,6 +124,7 @@ ecryptfs-utils.
 %{__automake}
 %configure \
 	--enable-gpg \
+	--enable-nss \
 	--enable-openssl \
 	--enable-pam \
 	--enable-pkcs11-helper \
