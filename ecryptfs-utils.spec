@@ -2,7 +2,7 @@ Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
 Version:	85
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Base
 Source0:	http://launchpad.net/ecryptfs/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
@@ -145,6 +145,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%pre
+%groupadd -g 260 ecryptfs
+
+%postun
+if [ "$1" = "0" ]; then
+        %groupremove ecryptfs
+fi
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
