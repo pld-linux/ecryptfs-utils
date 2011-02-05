@@ -2,7 +2,7 @@ Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
 Version:	85
-Release:	3
+Release:	4
 License:	GPL v2+
 Group:		Base
 Source0:	http://launchpad.net/ecryptfs/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
@@ -161,7 +161,7 @@ fi
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README THANKS doc/{ecryptfs-faq.html,ecryptfs-pkcs11-helper-doc.txt}
 %attr(755,root,root) /sbin/mount.ecryptfs
-%attr(755,root,root) /sbin/mount.ecryptfs_private
+%attr(4750,root,ecryptfs) /sbin/mount.ecryptfs_private
 %attr(755,root,root) /sbin/umount.ecryptfs_private
 %attr(755,root,root) /sbin/umount.ecryptfs
 %attr(755,root,root) %{_bindir}/ecryptfs-*
