@@ -150,12 +150,12 @@ rm -rf $RPM_BUILD_ROOT
 %groupadd -g 260 ecryptfs
 
 %postun
+/sbin/ldconfig
 if [ "$1" = "0" ]; then
         %groupremove ecryptfs
 fi
 
 %post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
