@@ -16,6 +16,8 @@ Patch5:		%{name}-75-werror.patch
 URL:		http://ecryptfs.sourceforge.net/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
+BuildRequires:	gettext-devel
+BuildRequires:	glib2-devel
 BuildRequires:	gpgme-devel
 BuildRequires:	intltool >= 0.41.0
 BuildRequires:	keyutils-devel >= 1.0
@@ -27,6 +29,8 @@ BuildRequires:	perl-tools-pod
 BuildRequires:	pkcs11-helper-devel >= 1.04
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.5
+BuildRequires:	python-modules
+BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
 BuildRequires:	swig >= 1.3.31
 BuildRequires:	trousers-devel
