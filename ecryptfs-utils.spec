@@ -166,7 +166,7 @@ fi
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README THANKS doc/{ecryptfs-faq.html,ecryptfs-pkcs11-helper-doc.txt}
 %attr(755,root,root) /sbin/mount.ecryptfs
-%attr(4750,root,ecryptfs) /sbin/mount.ecryptfs_private
+%attr(4754,root,ecryptfs) /sbin/mount.ecryptfs_private
 %attr(755,root,root) /sbin/umount.ecryptfs_private
 %attr(755,root,root) /sbin/umount.ecryptfs
 %attr(755,root,root) %{_bindir}/ecryptfs-*
