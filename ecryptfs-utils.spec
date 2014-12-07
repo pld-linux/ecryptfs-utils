@@ -1,24 +1,28 @@
+#
+# Conditional build:
+%bcond_with	gui	# GTK+ GUI components (non-existing as of 104)
+#
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	85
-Release:	4
+Version:	104
+Release:	1
 License:	GPL v2+
 Group:		Base
-Source0:	http://launchpad.net/ecryptfs/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
-# Source0-md5:	eacf9488681d99651da544a4c261f784
+#Source0Download: https://launchpad.net/ecryptfs/+download
+Source0:	https://launchpad.net/ecryptfs/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
+# Source0-md5:	6ae93822bcf0d15470516c30a3deee32
 Patch0:		%{name}-sh.patch
 Patch1:		%{name}-83-fixsalt.patch
 Patch2:		%{name}-83-splitnss.patch
-Patch3:		%{name}-84-fgetc.patch
-Patch4:		%{name}-84-fixsigness.patch
-Patch5:		%{name}-75-werror.patch
-URL:		http://ecryptfs.sourceforge.net/
+Patch3:		%{name}-84-fixsigness.patch
+URL:		http://ecryptfs.org/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel
+BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gpgme-devel
+%{?with_gui:BuildRequires:	gtk+2-devel >= 2.0}
 BuildRequires:	intltool >= 0.41.0
 BuildRequires:	keyutils-devel >= 1.0
 BuildRequires:	libtool
@@ -33,6 +37,7 @@ BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
 BuildRequires:	swig >= 1.3.31
+BuildRequires:	swig-python >= 1.3.31
 BuildRequires:	trousers-devel
 Requires:	uname(release) >= 2.6.19
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -117,8 +122,6 @@ ecryptfs-utils.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 %{__libtoolize}
@@ -128,6 +131,7 @@ ecryptfs-utils.
 %{__automake}
 %configure \
 	--enable-gpg \
+	%{?with_gui:--enable-gui} \
 	--enable-nss \
 	--enable-openssl \
 	--enable-pam \
@@ -172,7 +176,7 @@ fi
 %attr(755,root,root) %{_bindir}/ecryptfs-*
 %attr(755,root,root) %{_bindir}/ecryptfsd
 %attr(755,root,root) %{_libdir}/libecryptfs.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libecryptfs.so.0
+%attr(755,root,root) %ghost %{_libdir}/libecryptfs.so.1
 %dir %{_libdir}/ecryptfs
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_gpg.so
 %attr(755,root,root) %{_libdir}/ecryptfs/libecryptfs_key_mod_openssl.so
@@ -202,7 +206,6 @@ fi
 
 %files -n pam-pam_ecryptfs
 %defattr(644,root,root,755)
-%doc doc/ecryptfs-pam-doc.txt
 %attr(755,root,root) /%{_lib}/security/pam_ecryptfs.so
 %{_mandir}/man8/pam_ecryptfs.8*
 
