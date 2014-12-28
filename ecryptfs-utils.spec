@@ -19,7 +19,7 @@ Patch3:		%{name}-84-fixsigness.patch
 URL:		http://ecryptfs.org/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gpgme-devel
 %{?with_gui:BuildRequires:	gtk+2-devel >= 2.0}
