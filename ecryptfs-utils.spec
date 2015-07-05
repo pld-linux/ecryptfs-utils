@@ -5,13 +5,13 @@
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	104
+Version:	106
 Release:	1
 License:	GPL v2+
 Group:		Base
 #Source0Download: https://launchpad.net/ecryptfs/+download
 Source0:	https://launchpad.net/ecryptfs/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
-# Source0-md5:	6ae93822bcf0d15470516c30a3deee32
+# Source0-md5:	bff8052636f6be642f15c6be45a14ea3
 Patch0:		%{name}-sh.patch
 Patch1:		%{name}-83-fixsalt.patch
 Patch2:		%{name}-83-splitnss.patch
@@ -33,7 +33,7 @@ BuildRequires:	perl-tools-pod
 BuildRequires:	pkcs11-helper-devel >= 1.04
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.5
-BuildRequires:	python-modules
+BuildRequires:	python-modules >= 1:2.5
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.219
 BuildRequires:	swig >= 1.3.31
