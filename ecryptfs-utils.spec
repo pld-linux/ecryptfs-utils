@@ -6,7 +6,7 @@ Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
 Version:	106
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Base
 #Source0Download: https://launchpad.net/ecryptfs/+download
