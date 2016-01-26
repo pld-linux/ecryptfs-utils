@@ -1,17 +1,18 @@
 #
 # Conditional build:
-%bcond_with	gui	# GTK+ GUI components (non-existing as of 104)
+%bcond_with	gui		# GTK+ GUI components (non-existing as of 104)
+%bcond_without	static_libs	# static library
 #
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	106
-Release:	2
+Version:	109
+Release:	1
 License:	GPL v2+
 Group:		Base
 #Source0Download: https://launchpad.net/ecryptfs/+download
 Source0:	https://launchpad.net/ecryptfs/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
-# Source0-md5:	bff8052636f6be642f15c6be45a14ea3
+# Source0-md5:	8e33f096c8cb8288f9c29a9936cd0d28
 Patch0:		%{name}-sh.patch
 Patch1:		%{name}-83-fixsalt.patch
 Patch2:		%{name}-83-splitnss.patch
@@ -137,7 +138,7 @@ ecryptfs-utils.
 	--enable-pam \
 	--enable-pkcs11-helper \
 	--enable-tspi \
-	--enable-static
+	%{?with_static_libs:--enable-static}
 
 %{__make}
 
@@ -147,7 +148,11 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/%{name}/_libecryptfs.{la,a}
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libecryptfs.la
+
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/%{name}/_libecryptfs.la \
+	%{?with_static_libs:$RPM_BUILD_ROOT%{py_sitedir}/%{name}/_libecryptfs.a}
 %py_postclean
 
 %find_lang %{name}
@@ -196,13 +201,14 @@ fi
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libecryptfs.so
-%{_libdir}/libecryptfs.la
 %{_includedir}/ecryptfs.h
 %{_pkgconfigdir}/libecryptfs.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libecryptfs.a
+%endif
 
 %files -n pam-pam_ecryptfs
 %defattr(644,root,root,755)
