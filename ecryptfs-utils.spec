@@ -1,18 +1,18 @@
 #
 # Conditional build:
-%bcond_with	gui		# GTK+ GUI components (non-existing as of 104)
+%bcond_with	gui		# GTK+ GUI components (non-existing as of 111)
 %bcond_without	static_libs	# static library
 #
 Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
-Version:	110
+Version:	111
 Release:	1
 License:	GPL v2+
 Group:		Base
 #Source0Download: https://launchpad.net/ecryptfs/+download
 Source0:	https://launchpad.net/ecryptfs/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
-# Source0-md5:	3205ce74b2236ee7fe94509dc0fe3660
+# Source0-md5:	83513228984f671930752c3518cac6fd
 Patch0:		%{name}-sh.patch
 Patch1:		%{name}-83-fixsalt.patch
 Patch2:		%{name}-83-splitnss.patch
