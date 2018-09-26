@@ -7,7 +7,7 @@ Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
 Version:	111
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Base
 #Source0Download: https://launchpad.net/ecryptfs/+download
@@ -17,6 +17,7 @@ Patch0:		%{name}-sh.patch
 Patch1:		%{name}-83-fixsalt.patch
 Patch2:		%{name}-83-splitnss.patch
 Patch3:		%{name}-84-fixsigness.patch
+Patch4:		openssl.patch
 URL:		http://ecryptfs.org/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -123,6 +124,7 @@ ecryptfs-utils.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__libtoolize}
