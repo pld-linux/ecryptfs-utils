@@ -18,6 +18,7 @@ Patch1:		%{name}-83-fixsalt.patch
 Patch2:		%{name}-83-splitnss.patch
 Patch3:		%{name}-84-fixsigness.patch
 Patch4:		openssl.patch
+Patch5:		%{name}-types.patch
 URL:		http://ecryptfs.org/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -125,6 +126,7 @@ ecryptfs-utils.
 %patch -P2 -p1
 %patch -P3 -p1
 %patch -P4 -p1
+%patch -P5 -p1
 
 %build
 %{__libtoolize}
