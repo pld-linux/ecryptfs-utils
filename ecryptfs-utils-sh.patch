@@ -1,13 +1,24 @@
---- ecryptfs-utils-38/configure.ac.orig	2008-01-02 22:38:33.000000000 +0100
-+++ ecryptfs-utils-38/configure.ac	2008-01-13 20:16:45.171399011 +0100
-@@ -234,8 +234,8 @@
+--- ecryptfs-utils-111/configure.ac.orig	2016-02-23 23:34:08.000000000 +0100
++++ ecryptfs-utils-111/configure.ac	2025-07-20 20:44:42.221902832 +0200
+@@ -316,12 +316,18 @@ fi
+ 
+ if test "${enable_gpg}" = "yes" ; then
+ 	AC_MSG_CHECKING([for gpgme])
+-	if ! test -x "${with_gpgme_prefix}/bin/gpgme-config"; then
++	GPGME_CONFIG=no
++	if test -x "${with_gpgme_prefix}/bin/gpgme-config"; then
++		GPGME_CONFIG="${with_gpgme_prefix}/bin/gpgme-config"
++	elif test -x "${with_gpgme_prefix}/bin/gpgrt-config"; then
++		GPGME_CONFIG="${with_gpgme_prefix}/bin/gpgrt-config gpgme"
++	fi
++	if test "$GPGME_CONFIG" = "no"; then
  		AC_MSG_ERROR([Cannot locate gpgme])
  	else
  		AC_MSG_RESULT([found])
 -		GPGME_CFLAGS="`\"${with_gpgme_prefix}/bin/gpgme-config\" --cflags`"
 -		GPGME_LIBS="`\"${with_gpgme_prefix}/bin/gpgme-config\" --libs`"
-+		GPGME_CFLAGS="$("${with_gpgme_prefix}/bin/gpgme-config" --cflags)"
-+		GPGME_LIBS="$("${with_gpgme_prefix}/bin/gpgme-config" --libs)"
++		GPGME_CFLAGS="$(${GPGME_CONFIG} --cflags)"
++		GPGME_LIBS="$(${GPGME_CONFIG} --libs)"
  	fi
  fi
  

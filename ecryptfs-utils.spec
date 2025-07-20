@@ -7,7 +7,7 @@ Summary:	The eCryptfs mount helper and support libraries
 Summary(pl.UTF-8):	Narzędzie pomocnicze i biblioteki do montowania eCryptfs
 Name:		ecryptfs-utils
 Version:	111
-Release:	4
+Release:	5
 License:	GPL v2+
 Group:		Base
 #Source0Download: https://launchpad.net/ecryptfs/+download
@@ -106,7 +106,7 @@ Summary:	Python bindings for the eCryptfs utils
 Summary(pl.UTF-8):	Wiązania Pythona do narzędzi eCryptfs
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
-Obsoletes:	ecryptfs-utils-python
+Obsoletes:	ecryptfs-utils-python < 85-2
 
 %description -n python-ecryptfs
 This package contains a module that permits applications written in
@@ -133,6 +133,7 @@ ecryptfs-utils.
 %{__autoheader}
 %{__automake}
 %configure \
+	PYTHON=%{__python} \
 	--enable-gpg \
 	%{?with_gui:--enable-gui} \
 	--enable-nss \
